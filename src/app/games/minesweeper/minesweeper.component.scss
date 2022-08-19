@@ -1,0 +1,10 @@
+$board: calc(100vmin - 4rem);
+$slot: calc($board / 10);
+.board {
+  height: $board;
+  width: $board;
+}
+.slot {
+  width: $slot;
+  height: $slot;
+}

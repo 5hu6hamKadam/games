@@ -1,0 +1,35 @@
+<article class="d-flex flex-column align-items-center justify-content-center">
+  <section class="d-flex justify-content-center align-items-center my-1">
+    <button
+      class="btn"
+      [ngClass]="!isFlag ? 'btn-white' : 'btn-danger'"
+      (click)="isFlag = !isFlag"
+    >
+      <em
+        class="fa fa-flag"
+        [ngClass]="!isFlag ? 'text-danger' : 'text-white'"
+      ></em>
+    </button>
+    <p class="mb-0 ml-2">WIN: {{ this.isWin }}</p>
+  </section>
+  <section class="board d-flex flex-wrap" *ngIf="slots$ | async as slots">
+    <div
+      class="slot border d-flex align-items-center justify-content-center"
+      [ngClass]="[slot.isHidden ? 'bg-dark' : 'bg-white']"
+      *ngFor="let slot of slots; let i = index"
+      (click)="onSlotSelect(i)"
+    >
+      <em
+        *ngIf="slot.isFlag && slot.isHidden"
+        class="fa-2x text-danger fa fa-flag"
+      ></em>
+      <em
+        *ngIf="slot.isBomb && !slot.isHidden"
+        class="fa-2x text-dark fa fa-bomb"
+      ></em>
+      <p *ngIf="slot.value && !slot.isHidden && !slot.isBomb">
+        {{ slot.value }}
+      </p>
+    </div>
+  </section>
+</article>
