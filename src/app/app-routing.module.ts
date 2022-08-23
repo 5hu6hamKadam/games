@@ -15,6 +15,13 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'flappy-bird',
+    loadChildren: () =>
+      import('./games/flappy-bird/flappy-bird.module').then(
+        (m) => m.FlappyBirdModule
+      ),
+  },
+  {
     path: '',
     redirectTo: 'menu',
     pathMatch: 'full',

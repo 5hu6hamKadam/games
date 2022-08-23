@@ -3,14 +3,10 @@
     <div class="col-12">
       <h2>Games</h2>
     </div>
-    <div class="col-2 text-center">
-      <div class="cursor-pointer" [routerLink]="['/minesweeper']">
-        <img
-          class="img"
-          src="../../../assets/images/minesweeper.jpg"
-          alt="minesweeper"
-        />
-        <p>Minesweeper</p>
+    <div class="col-2 text-center" *ngFor="let menuItem of menuItems">
+      <div class="cursor-pointer" [routerLink]="['/', menuItem.path]">
+        <img class="img" [src]="menuItem.src" [alt]="menuItem.title" />
+        <p>{{ menuItem.title }}</p>
       </div>
     </div>
   </div>
