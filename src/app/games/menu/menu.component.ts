@@ -22,6 +22,11 @@ export class MenuComponent implements OnInit {
       path: 'flappy-bird',
       src: '../../../assets/images/minesweeper.jpg',
     },
+    {
+      title: 'Memory',
+      path: 'memory',
+      src: '../../../assets/images/minesweeper.jpg',
+    },
   ];
   constructor() {}
 

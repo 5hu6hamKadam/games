@@ -1,0 +1,7 @@
+<div class="container-fluid">
+  <section class="row" *ngIf="cards$ | async as cards">
+    <div class="col-4 col-md-4 mt-2" *ngFor="let item of cards; let i = index">
+      <app-card [index]="i" [logo]="item"></app-card>
+    </div>
+  </section>
+</div>

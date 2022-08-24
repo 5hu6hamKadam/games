@@ -22,6 +22,11 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'memory',
+    loadChildren: () =>
+      import('./games/memory/memory.module').then((m) => m.MemoryModule),
+  },
+  {
     path: '',
     redirectTo: 'menu',
     pathMatch: 'full',

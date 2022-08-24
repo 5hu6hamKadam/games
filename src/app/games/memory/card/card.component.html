@@ -1,0 +1,14 @@
+<div
+  [hidden]="isHidden"
+  [ngClass]="['flip-card', isFlipped ? 'flip' : '']"
+  (click)="onClick()"
+>
+  <div class="flip-card-inner">
+    <div class="flip-card-front bg-danger"></div>
+    <div class="flip-card-back">
+      <div class="d-flex h-100 justify-content-center align-items-center">
+        <em *ngIf="logo" [ngClass]="['fa fa-3x', logo]"></em>
+      </div>
+    </div>
+  </div>
+</div>
