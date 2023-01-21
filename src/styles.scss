@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --dia: calc(min(100vh, 100vw) - 10rem);
+}
