@@ -8,13 +8,22 @@ import { ScreenComponent } from './panel/screen/screen.component';
 import { PalmComponent } from './panel/palm/palm.component';
 import { FormsModule } from '@angular/forms';
 import { PanelComponent } from './panel/panel.component';
+import { PracticeComponent } from './practice/practice.component';
 
 const routes: Routes = [
   {
+    path: ':mode',
+    component: PracticeComponent,
+  },
+  {
     path: '',
-    component: TypingTutorComponent
-  }
-]
+    component: TypingTutorComponent,
+  },
+  {
+    path: '**',
+    component: ErrorComponent,
+  },
+];
 
 @NgModule({
   declarations: [
@@ -23,12 +32,9 @@ const routes: Routes = [
     KeyboardComponent,
     ScreenComponent,
     PalmComponent,
-    PanelComponent
+    PanelComponent,
+    PracticeComponent,
   ],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(routes),
-    FormsModule
-  ]
+  imports: [CommonModule, RouterModule.forChild(routes), FormsModule],
 })
-export class TypingTutorModule { }
+export class TypingTutorModule {}

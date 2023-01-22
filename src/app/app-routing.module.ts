@@ -4,21 +4,25 @@ import { RouterModule, Routes } from '@angular/router';
 const routes: Routes = [
   {
     path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule)
+    loadChildren: () =>
+      import('./pages/home/home.module').then((m) => m.HomeModule),
   },
   {
     path: 'typing-tutor',
-    loadChildren: () => import('./pages/typing-tutor/typing-tutor.module').then(m => m.TypingTutorModule)
+    loadChildren: () =>
+      import('./pages/typing-tutor/typing-tutor.module').then(
+        (m) => m.TypingTutorModule
+      ),
   },
   {
     path: '',
-    redirectTo: 'typing-tutor',
-    pathMatch: 'full'
-  }
+    redirectTo: 'home',
+    pathMatch: 'full',
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

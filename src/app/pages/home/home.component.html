@@ -1,1 +1,10 @@
-<p>home works!</p>
+<div class="grid grid-cols-12 gap-2 px-2 py-2">
+  <h2 class="text-2xl text-purple-500 mb-2 col-span-12">Apps</h2>
+  <button
+    [ngClass]="['border px-3 py-2', app.class]"
+    *ngFor="let app of appList"
+    [routerLink]="app.link"
+  >
+    {{ app.label }}
+  </button>
+</div>

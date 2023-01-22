@@ -1,4 +1,20 @@
-<app-screen *ngIf="drill$ | async as drill" [drill]="drill"></app-screen>
+<ng-container
+  *ngIf="{
+    drill: drill$ | async,
+    drillLength: drillLength$ | async,
+    drillIndex: drillIndex$ | async
+  } as meta"
+>
+  <ng-container
+    *ngIf="meta.drill && meta.drillLength !== null && meta.drillIndex !== null"
+  >
+    <app-screen
+      [drill]="meta.drill"
+      [activeDrillIndex]="meta.drillIndex"
+      [drillLength]="meta.drillLength.length"
+    ></app-screen>
+  </ng-container>
+</ng-container>
 <div class="flex justify-center pt-2">
   <app-palm
     *ngIf="fingerIndex$ | async as fingerIndex"
@@ -7,7 +23,7 @@
   ></app-palm>
   <app-keyboard
     class="mx-2"
-    *ngIf="keyboardKey$ | async as keyboardKey"
+    *ngIf="keyboardKey$ | async | lowercase as keyboardKey"
     [activeChar]="keyboardKey"
   ></app-keyboard>
   <app-palm

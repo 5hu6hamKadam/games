@@ -12,12 +12,26 @@ export class PanelComponent implements OnInit, OnDestroy {
   public nextCharIndex$ = this.typingTutorService.nextCharIndex$;
   public fingerIndex$ = this.typingTutorService.fingerIndex$;
   public keyboardKey$ = this.typingTutorService.keyboardKey$;
-
+  public drillIndex$ = this.typingTutorService.activeDrillIndex$;
+  public drillLength$ = this.typingTutorService.drillList$;
   private ngUnsubscribe$ = new Subject();
 
   constructor(private typingTutorService: TypingTutorService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    fromEvent<KeyboardEvent>(document, 'keydown')
+      .pipe(
+        takeUntil(this.ngUnsubscribe$),
+        tap(({ code }) => {
+          if (code === 'ArrowRight') {
+            this.typingTutorService.nextDrill();
+          } else if (code === 'ArrowLeft') {
+            this.typingTutorService.prevDrill();
+          }
+        })
+      )
+      .subscribe();
+  }
 
   ngOnDestroy(): void {
     this.ngUnsubscribe$.next(true);

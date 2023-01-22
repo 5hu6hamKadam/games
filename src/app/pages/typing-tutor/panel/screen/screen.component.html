@@ -2,14 +2,17 @@
   <div class="bg-white h-20 max-h-20 overflow-y-auto p-2">
     <p class="font-mono" [innerHTML]="drill"></p>
   </div>
-  <div class="text-center">
-    <p>1/27</p>
+  <div
+    class="text-center"
+    *ngIf="activeDrillIndex !== null && drillLength !== null"
+  >
+    <p>{{ activeDrillIndex + 1 + "/" + drillLength }}</p>
   </div>
   <div class="bg-white">
     <textarea
       autofocus
       class="font-mono focus:outline-none w-full h-20 p-2"
-      [value]="userInput"
+      [(ngModel)]="userInput"
       (input)="onUserInput($event)"
     >
     </textarea>

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import {
   BehaviorSubject,
   from,
@@ -9,30 +10,76 @@ import {
   toArray,
   zip,
 } from 'rxjs';
-
+import drills from '../../assets/data/drill.json';
 @Injectable({
   providedIn: 'root',
 })
 export class TypingTutorService {
-  public drill$ = new BehaviorSubject<string>('abcdefghijklmnopqrstuvwxyz');
-  public displayDrill$ = new BehaviorSubject<string>(this.drill$.value);
-  public fingerIndex$ = new BehaviorSubject<number>(
-    this.findActiveFingerIndex(this.drill$.value[0])
-  );
-  public keyboardKey$ = new BehaviorSubject<string>(this.drill$.value[0]);
+  public drill$ = new BehaviorSubject<string>('test');
+  public displayDrill$ = new BehaviorSubject<string>('');
+  public fingerIndex$ = new BehaviorSubject<number>(1);
+  public keyboardKey$ = new BehaviorSubject<string>('');
   public userInput$ = new BehaviorSubject<string>('');
   public nextCharIndex$ = new Subject<number>();
-
-  constructor() {
-    this.listenInputChange();
-    this.verifyDrill();
+  public drillList$ = new BehaviorSubject<string[]>([]);
+  public activeDrillIndex$ = new BehaviorSubject<number>(0);
+  constructor(private router: Router) {
+    this.drill$
+      .pipe(
+        tap((v) => {
+          this.displayDrill$.next(v);
+          this.fingerIndex$.next(this.findActiveFingerIndex(v[0]));
+          this.keyboardKey$.next(v[0]);
+          this.listenInputChange();
+          this.verifyDrill();
+        })
+      )
+      .subscribe();
+    this.keyboardKey$.pipe(tap((v) => console.log('keyboard', v))).subscribe();
   }
 
   public setInput(inputVal: string) {
     this.userInput$.next(inputVal);
   }
 
+  public setDrills(mode: string) {
+    switch (mode) {
+      case 'course':
+        this.drillList$.next(drills);
+        break;
+
+      default:
+        break;
+    }
+    this.drill$.next(this.drillList$.value[0]);
+  }
+
+  public nextDrill() {
+    if (this.activeDrillIndex$.value === this.drillList$.value.length - 1) {
+      return;
+    }
+    this.activeDrillIndex$.next(this.activeDrillIndex$.value + 1);
+    const drill = this.drillList$.value[this.activeDrillIndex$.value];
+    if (drill) {
+      this.drill$.next(drill);
+    }
+  }
+
+  public prevDrill() {
+    if (this.activeDrillIndex$.value === 0) {
+      return;
+    }
+    this.activeDrillIndex$.next(this.activeDrillIndex$.value - 1);
+    const drill = this.drillList$.value[this.activeDrillIndex$.value];
+    if (drill) {
+      this.drill$.next(drill);
+    }
+  }
+
   private findActiveFingerIndex(char: string): number {
+    if (!char) {
+      return 0;
+    }
     const fingers = [
       [1, '!', 'Q', 'A', 'Z'],
       [2, '@', 'W', 'S', 'X'],
@@ -82,7 +129,7 @@ export class TypingTutorService {
                 value = j;
               } else {
                 value = `<span class="text-red-500">${j}</span>`;
-                if (index === this.userInput$.value.length - 1) {
+                if (index === this.userInput$.value.length - 1 && index !== 0) {
                   this.playSound('failed');
                 }
               }
@@ -108,10 +155,12 @@ export class TypingTutorService {
   private checkDrillCompleted() {
     if (this.userInput$.value.length === this.drill$.value.length) {
       this.playSound('success');
+      this.nextDrill();
     }
   }
+
   private playSound(type: 'success' | 'failed') {
-    var audio = new Audio();
+    const audio = new Audio();
     audio.src = `/assets/${type}.mp3`;
     audio.load();
     audio.play();

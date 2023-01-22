@@ -1,36 +1,36 @@
-import { INavItem } from "./nav-item.interface";
+import { INavItem } from './nav-item.interface';
 
 export const MENU_ITEMS: INavItem[] = [
   {
     label: 'Course',
-    link: 'course'
+    link: '/typing-tutor/course',
   },
   {
-    label: 'Sentense Drills',
-    link: 'course'
+    label: 'Sentence Drills',
+    link: '/typing-tutor/sentence',
   },
   {
     label: 'Free Drills',
-    link: 'course'
+    link: '/typing-tutor/free',
   },
   {
     label: 'Paragraph Drills',
-    link: 'course'
+    link: '/typing-tutor/paragraph',
   },
   {
     label: 'Game',
-    link: 'course'
+    link: '/typing-tutor/game',
   },
   {
     label: 'Help',
-    link: 'course'
+    link: '/typing-tutor/course',
   },
   {
     label: 'Exit',
-    link: 'course'
+    link: '/',
   },
   {
     label: 'Profile',
-    link: 'course'
-  }
-]
+    link: '/typing-tutor/course',
+  },
+];
