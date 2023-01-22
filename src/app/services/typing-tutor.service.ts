@@ -1,11 +1,21 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Subject, tap } from 'rxjs';
+import {
+  BehaviorSubject,
+  from,
+  map,
+  mergeMap,
+  Subject,
+  tap,
+  toArray,
+  zip,
+} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TypingTutorService {
   public drill$ = new BehaviorSubject<string>('abcdefghijklmnopqrstuvwxyz');
+  public displayDrill$ = new BehaviorSubject<string>(this.drill$.value);
   public fingerIndex$ = new BehaviorSubject<number>(
     this.findActiveFingerIndex(this.drill$.value[0])
   );
@@ -15,7 +25,7 @@ export class TypingTutorService {
 
   constructor() {
     this.listenInputChange();
-    // this.setActiveFingerIndex(this.drill$.value[0]);
+    this.verifyDrill();
   }
 
   public setInput(inputVal: string) {
@@ -45,17 +55,65 @@ export class TypingTutorService {
     this.fingerIndex$.next(index + 1);
   }
 
-  private listenInputChange() {
+  private listenInputChange(): void {
     this.userInput$
       .pipe(
         tap((v) => this.nextCharIndex$.next(v.length)),
         tap((v) => {
-          if (this.drill$.value[v.length]) {
-            this.setActiveFingerIndex(this.drill$.value[v.length]);
-            this.keyboardKey$.next(this.drill$.value[v.length]);
+          const char = this.drill$.value[v.length];
+          if (char) {
+            this.setActiveFingerIndex(char);
+            this.keyboardKey$.next(char);
           }
         })
       )
       .subscribe();
+  }
+
+  private verifyDrill() {
+    this.userInput$
+      .pipe(
+        map((v) => zip(from(v), from(this.drill$.value))),
+        mergeMap((v) =>
+          v.pipe(
+            map(([i, j], index) => {
+              let value;
+              if (i === j) {
+                value = j;
+              } else {
+                value = `<span class="text-red-500">${j}</span>`;
+                if (index === this.userInput$.value.length - 1) {
+                  this.playSound('failed');
+                }
+              }
+              return value;
+            }),
+            toArray()
+          )
+        ),
+        map(
+          (v) =>
+            v.join('') +
+            `<span class="bg-black text-white">${
+              this.drill$.value[v.length] || ''
+            }</span>` +
+            this.drill$.value.slice(v.length + 1)
+        ),
+        tap((v) => this.displayDrill$.next(v)),
+        tap((v) => this.checkDrillCompleted())
+      )
+      .subscribe();
+  }
+
+  private checkDrillCompleted() {
+    if (this.userInput$.value.length === this.drill$.value.length) {
+      this.playSound('success');
+    }
+  }
+  private playSound(type: 'success' | 'failed') {
+    var audio = new Audio();
+    audio.src = `/assets/${type}.mp3`;
+    audio.load();
+    audio.play();
   }
 }

@@ -8,7 +8,7 @@ import { TypingTutorService } from 'src/app/services/typing-tutor.service';
   styleUrls: ['./panel.component.scss'],
 })
 export class PanelComponent implements OnInit, OnDestroy {
-  public drill$ = this.typingTutorService.drill$;
+  public drill$ = this.typingTutorService.displayDrill$;
   public nextCharIndex$ = this.typingTutorService.nextCharIndex$;
   public fingerIndex$ = this.typingTutorService.fingerIndex$;
   public keyboardKey$ = this.typingTutorService.keyboardKey$;
