@@ -1,0 +1,22 @@
+<div class="p-2 border w-fit bg-black">
+  <div
+    *ngIf="mode === 'left'; else right"
+    class="left-palm grid grid-cols-5 gap-1 items-end w-fit h-32"
+  >
+    <div
+      *ngFor="let finger of fingers; let i = index"
+      [ngClass]="[finger, activeFingerIndex === i + 1 ? 'animate-pulse' : '']"
+    ></div>
+  </div>
+  <ng-template #right>
+    <div class="right-palm grid grid-cols-5 gap-1 items-end w-fit h-32">
+      <div
+        *ngFor="let finger of fingers.reverse(); let i = index"
+        [ngClass]="[
+          finger,
+          activeFingerIndex - 5 === i + 1 ? 'animate-pulse duration-75' : ''
+        ]"
+      ></div>
+    </div>
+  </ng-template>
+</div>

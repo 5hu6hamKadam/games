@@ -1,0 +1,55 @@
+<div class="border p-2">
+  <div class="flex">
+    <div
+      [ngClass]="[
+        'm-0.5 key bg-green-300 w-10 text-center border ',
+        key.includes(activeChar) ? 'bg-green-700 text-white' : ''
+      ]"
+      *ngFor="let key of row1"
+    >
+      {{ key | uppercase }}
+    </div>
+    <div class="w-10"></div>
+  </div>
+  <div class="flex justify-center">
+    <div
+      [ngClass]="[
+        'm-0.5 key bg-green-300 w-10 text-center border',
+        key.includes(activeChar) ? 'bg-green-700 text-white' : ''
+      ]"
+      *ngFor="let key of row2"
+    >
+      {{ key | uppercase }}
+    </div>
+  </div>
+  <div class="flex justify-center">
+    <div
+      [ngClass]="[
+        'm-0.5 key bg-green-300 w-10 text-center border',
+        key.includes(activeChar) ? 'bg-green-700 text-white' : ''
+      ]"
+      *ngFor="let key of row3"
+    >
+      {{ key | uppercase }}
+    </div>
+  </div>
+  <div class="flex justify-center">
+    <div
+      [ngClass]="[
+        'm-0.5 key bg-green-300 w-10 text-center border',
+        key.includes(activeChar) ? 'bg-green-700 text-white' : ''
+      ]"
+      *ngFor="let key of row4"
+    >
+      {{ key | uppercase }}
+    </div>
+  </div>
+  <div class="flex justify-center">
+    <div
+      [ngClass]="[
+        'w-2/5 h-10 m-0.5 bg-green-300',
+        activeChar === ' ' ? 'bg-green-700 text-white' : ''
+      ]"
+    ></div>
+  </div>
+</div>

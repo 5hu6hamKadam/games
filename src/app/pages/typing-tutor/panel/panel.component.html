@@ -1,0 +1,18 @@
+<app-screen *ngIf="drill$ | async as drill" [drill]="drill"></app-screen>
+<div class="flex justify-center pt-2">
+  <app-palm
+    *ngIf="fingerIndex$ | async as fingerIndex"
+    mode="left"
+    [activeFingerIndex]="fingerIndex"
+  ></app-palm>
+  <app-keyboard
+    class="mx-2"
+    *ngIf="keyboardKey$ | async as keyboardKey"
+    [activeChar]="keyboardKey"
+  ></app-keyboard>
+  <app-palm
+    *ngIf="fingerIndex$ | async as fingerIndex"
+    mode="right"
+    [activeFingerIndex]="fingerIndex"
+  ></app-palm>
+</div>

@@ -1,0 +1,17 @@
+<div class="bg-green-300 p-1 grid grid-cols-1">
+  <div class="bg-white h-20 max-h-20 overflow-y-auto p-2">
+    <p class="font-mono">{{ drill }}</p>
+  </div>
+  <div class="text-center">
+    <p>1/27</p>
+  </div>
+  <div class="bg-white">
+    <textarea
+      autofocus
+      class="font-mono focus:outline-none w-full h-20 p-2"
+      [value]="userInput"
+      (input)="onUserInput($event)"
+    >
+    </textarea>
+  </div>
+</div>

@@ -7,8 +7,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule)
   },
   {
+    path: 'typing-tutor',
+    loadChildren: () => import('./pages/typing-tutor/typing-tutor.module').then(m => m.TypingTutorModule)
+  },
+  {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'typing-tutor',
     pathMatch: 'full'
   }
 ];
