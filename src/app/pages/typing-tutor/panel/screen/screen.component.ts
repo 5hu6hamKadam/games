@@ -36,7 +36,6 @@ export class ScreenComponent implements OnInit, OnDestroy {
       .pipe(
         takeUntil(this.ngUnsubscribe$),
         tap(() => {
-          console.log('reset');
           this.userInput = '';
           this.typingTutorService.setInput('');
         })

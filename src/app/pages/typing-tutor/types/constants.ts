@@ -9,28 +9,28 @@ export const MENU_ITEMS: INavItem[] = [
     label: 'Sentence Drills',
     link: '/typing-tutor/sentence',
   },
-  {
-    label: 'Free Drills',
-    link: '/typing-tutor/free',
-  },
+  // {
+  //   label: 'Free Drills',
+  //   link: '/typing-tutor/free',
+  // },
   {
     label: 'Paragraph Drills',
     link: '/typing-tutor/paragraph',
   },
-  {
-    label: 'Game',
-    link: '/typing-tutor/game',
-  },
-  {
-    label: 'Help',
-    link: '/typing-tutor/course',
-  },
+  // {
+  //   label: 'Game',
+  //   link: '/typing-tutor/game',
+  // },
+  // {
+  //   label: 'Help',
+  //   link: '/typing-tutor/course',
+  // },
   {
     label: 'Exit',
     link: '/',
   },
-  {
-    label: 'Profile',
-    link: '/typing-tutor/course',
-  },
+  // {
+  //   label: 'Profile',
+  //   link: '/typing-tutor/course',
+  // },
 ];

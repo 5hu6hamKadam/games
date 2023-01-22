@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   BehaviorSubject,
+  filter,
   from,
   map,
   mergeMap,
@@ -11,6 +12,8 @@ import {
   zip,
 } from 'rxjs';
 import drills from '../../assets/data/drill.json';
+import sentence from '../../assets/data/sentence.json';
+import paragraph from '../../assets/data/paragraph.json';
 @Injectable({
   providedIn: 'root',
 })
@@ -23,6 +26,7 @@ export class TypingTutorService {
   public nextCharIndex$ = new Subject<number>();
   public drillList$ = new BehaviorSubject<string[]>([]);
   public activeDrillIndex$ = new BehaviorSubject<number>(0);
+
   constructor(private router: Router) {
     this.drill$
       .pipe(
@@ -35,7 +39,6 @@ export class TypingTutorService {
         })
       )
       .subscribe();
-    this.keyboardKey$.pipe(tap((v) => console.log('keyboard', v))).subscribe();
   }
 
   public setInput(inputVal: string) {
@@ -46,6 +49,12 @@ export class TypingTutorService {
     switch (mode) {
       case 'course':
         this.drillList$.next(drills);
+        break;
+      case 'sentence':
+        this.drillList$.next(sentence);
+        break;
+      case 'paragraph':
+        this.drillList$.next(paragraph);
         break;
 
       default:
