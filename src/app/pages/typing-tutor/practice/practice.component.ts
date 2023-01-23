@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { NGXLogger } from 'ngx-logger';
 import { DrillService } from 'src/app/services/drill.service';
-import { TypingTutorService } from 'src/app/services/typing-tutor.service';
 
 @Component({
   selector: 'app-practice',

@@ -6,8 +6,6 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { Subject, takeUntil, tap } from 'rxjs';
-import { TypingTutorService } from 'src/app/services/typing-tutor.service';
 
 @Component({
   selector: 'app-screen',
