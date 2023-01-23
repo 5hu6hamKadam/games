@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TypingTutorService } from './typing-tutor.service';
+import { PalmService } from './palm.service';
 
-describe('TypingTutorService', () => {
-  let service: TypingTutorService;
+describe('PalmService', () => {
+  let service: PalmService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(TypingTutorService);
+    service = TestBed.inject(PalmService);
   });
 
   it('should be created', () => {

@@ -1,6 +1,6 @@
 <ng-container
   *ngIf="{
-    drill: drill$ | async,
+    drill: displayDrill$ | async,
     drillLength: drillLength$ | async,
     drillIndex: drillIndex$ | async
   } as meta"
@@ -11,7 +11,9 @@
     <app-screen
       [drill]="meta.drill"
       [activeDrillIndex]="meta.drillIndex"
-      [drillLength]="meta.drillLength.length"
+      [drillLength]="meta.drillLength"
+      [(input)]="userInput"
+      (inputChange)="onUserInput($event)"
     ></app-screen>
   </ng-container>
 </ng-container>

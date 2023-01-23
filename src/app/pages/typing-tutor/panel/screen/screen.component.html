@@ -11,8 +11,8 @@
   <div class="bg-white">
     <textarea
       autofocus
+      [value]="input"
       class="font-mono focus:outline-none w-full h-20 p-2"
-      [(ngModel)]="userInput"
       (input)="onUserInput($event)"
     >
     </textarea>

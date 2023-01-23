@@ -1,4 +1,11 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Subject, takeUntil, tap } from 'rxjs';
 import { TypingTutorService } from 'src/app/services/typing-tutor.service';
 
@@ -14,32 +21,16 @@ export class ScreenComponent implements OnInit, OnDestroy {
   public activeDrillIndex!: number | null;
   @Input()
   public drillLength!: number;
-  public userInput = '';
+  @Input()
+  public input!: string;
+  @Output()
+  public inputChange = new EventEmitter<string>();
 
-  private ngUnsubscribe$ = new Subject();
-  constructor(private typingTutorService: TypingTutorService) {}
+  ngOnInit(): void {}
 
-  ngOnInit(): void {
-    this.listenClearInput();
-  }
+  ngOnDestroy(): void {}
 
-  ngOnDestroy(): void {
-    this.ngUnsubscribe$.next(true);
-    this.ngUnsubscribe$.complete();
-  }
   public onUserInput(event: any) {
-    this.typingTutorService.setInput(event.target.value);
-  }
-
-  private listenClearInput() {
-    this.typingTutorService.drill$
-      .pipe(
-        takeUntil(this.ngUnsubscribe$),
-        tap(() => {
-          this.userInput = '';
-          this.typingTutorService.setInput('');
-        })
-      )
-      .subscribe();
+    this.inputChange.next(event.target.value);
   }
 }

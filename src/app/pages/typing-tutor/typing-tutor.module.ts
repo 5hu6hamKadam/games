@@ -9,6 +9,7 @@ import { PalmComponent } from './panel/palm/palm.component';
 import { FormsModule } from '@angular/forms';
 import { PanelComponent } from './panel/panel.component';
 import { PracticeComponent } from './practice/practice.component';
+import { LoggerModule } from 'ngx-logger';
 
 const routes: Routes = [
   {
@@ -35,6 +36,11 @@ const routes: Routes = [
     PanelComponent,
     PracticeComponent,
   ],
-  imports: [CommonModule, RouterModule.forChild(routes), FormsModule],
+  imports: [
+    CommonModule,
+    RouterModule.forChild(routes),
+    FormsModule,
+    LoggerModule.forChild(),
+  ],
 })
 export class TypingTutorModule {}
