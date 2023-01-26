@@ -1,12 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
   BehaviorSubject,
+  from,
   fromEvent,
   map,
-  scan,
   Subject,
+  take,
   takeUntil,
   tap,
+  toArray,
 } from 'rxjs';
 import { DrillService } from 'src/app/services/drill.service';
 import { KeyboardService } from 'src/app/services/keyboard.service';
@@ -41,24 +43,33 @@ export class PanelComponent implements OnInit, OnDestroy {
 
   public onUserInput(input: string) {
     const drill = this.drillService.getActiveDrill();
-    this.keyboardService.setNextKey(drill[input.length]);
-    this.palmService.setNextFinger(drill[input.length]);
+
     if (input[input.length - 1] !== drill[input.length - 1]) {
       this.playSound('failed');
     }
-    const displayDrill =
-      input
-        .split('')
-        .map((inputChar, inputIndex) => {
-          if (inputChar === drill[inputIndex]) {
-            return inputChar;
-          } else {
-            return `<span class="text-red-500">${drill[inputIndex]}</span>`;
+    from(input)
+      .pipe(
+        tap(() => {
+          this.keyboardService.setNextKey(drill[input.length]);
+          this.palmService.setNextFinger(drill[input.length]);
+        }),
+        map((char, charIndex) => {
+          if (char !== drill[charIndex]) {
+            return `<span class="text-red-500">${drill[charIndex]}</span>`;
           }
-        })
-        .join('') + drill.slice(input.length);
-    this.displayDrill$.next(displayDrill);
-
+          return char;
+        }),
+        toArray(),
+        map(
+          (v) =>
+            v.join('') +
+            `<span class="bg-black text-white">${drill[v.length]}</span>` +
+            drill.slice(v.length + 1)
+        ),
+        take(1),
+        tap((v) => this.displayDrill$.next(v))
+      )
+      .subscribe();
     if (input.length === drill.length) {
       this.playSound('success');
       this.drillService.nextDrill();
@@ -84,10 +95,13 @@ export class PanelComponent implements OnInit, OnDestroy {
     this.drillService.drill$
       .pipe(
         takeUntil(this.ngUnsubscribe$),
-        tap((v) => this.displayDrill$.next(v)),
-        map((v) => v[0]),
-        tap((v) => this.keyboardService.setNextKey(v)),
-        tap((v) => this.palmService.setNextFinger(v))
+        tap((v) =>
+          this.displayDrill$.next(
+            `<span class="bg-black text-white">${v[0]}</span>${v.slice(1)}`
+          )
+        ),
+        tap((v) => this.keyboardService.setNextKey(v[0])),
+        tap((v) => this.palmService.setNextFinger(v[0]))
       )
       .subscribe();
   }
