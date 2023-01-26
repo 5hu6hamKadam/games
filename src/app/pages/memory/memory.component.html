@@ -1,0 +1,26 @@
+<div class="grid grid-cols-3 gap-3 px-3 py-2">
+  <div
+    [ngClass]="['card text-center', card.class ? card.class : '']"
+    *ngFor="let card of cardList; let index = index"
+    (click)="card.label !== 0 && userInput$.next({ card: card.label, index })"
+  >
+    <div class="flip h-full">
+      <div class="flip-content h-full">
+        <div
+          class="flip-front flex flex-col justify-center align-middle h-full"
+        ></div>
+        <div class="flip-back flex flex-col justify-center align-middle h-full">
+          <p class="text-6xl font-black">{{ card.label || "" }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div
+  *ngIf="gameOver$ | async"
+  class="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 py-5 px-8 bg-green-700 text-white"
+>
+  <div class="flex flex-col h-full text-center">
+    <p class="text-3xl">Congratulations!!</p>
+  </div>
+</div>

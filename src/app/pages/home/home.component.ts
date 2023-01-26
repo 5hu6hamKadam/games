@@ -12,5 +12,10 @@ export class HomeComponent {
       label: 'Typing tutor',
       link: '/typing-tutor',
     },
+    {
+      class: 'bg-green-300 text-white',
+      label: 'Memory game',
+      link: '/memory',
+    },
   ];
 }

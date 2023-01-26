@@ -15,6 +15,11 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'memory',
+    loadChildren: () =>
+      import('./pages/memory/memory.module').then((m) => m.MemoryModule),
+  },
+  {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',

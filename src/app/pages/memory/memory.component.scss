@@ -1,0 +1,38 @@
+$cardHeight: calc(90vh / 4);
+
+.card {
+  height: $cardHeight;
+}
+.flip {
+  text-align: center;
+  perspective: 600px;
+}
+.flip-content {
+  transition: transform 0.4s;
+  transform-style: preserve-3d;
+}
+.flip-front,
+.flip-back {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  line-height: 150px;
+  backface-visibility: hidden;
+  color: #fff;
+  background: rgb(14, 171, 14);
+}
+.flip-back {
+  transform: rotateY(180deg);
+}
+
+.turn .flip-content {
+  transform: rotateY(180deg);
+  transition: transform 0.3s;
+}
+
+.white-bg {
+  .flip-front,
+  .flip-back {
+    background: white !important;
+  }
+}
